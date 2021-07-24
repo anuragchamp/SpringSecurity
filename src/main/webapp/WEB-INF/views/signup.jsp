@@ -13,18 +13,12 @@
 </head>
 <body>
    <div class="container text-center">
-       <h1>My Custom login page</h1>
-       <c:if test="${param.error != null}">
-       <p class="text-danger"> Invalid user name and password</p>
-       </c:if>
-       
-        <c:if test="${param.logout != null}">
-       <p class="text-danger"> You have logout from the site</p>
-       </c:if>
-       <form:form>
-         Username <input type="text" name="username" /> <br /><br /><br />
-         Password <input type="password" name="password" /> <br/><br /><br />  
-         <input type="submit" value="login">
+       <h1>My Custom Sign up page</h1>
+
+       <form:form action="process-signup" method="post" modelAttribute="singupdto">
+         Username <form:input  path="username" /> <br /><br /><br />
+         Password <form:input  path="password" /> <br/><br /><br />  
+         <input type="submit" value="sign-up">
        </form:form>
    </div>
    

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -22,19 +23,20 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter  {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 	   //load data from database
-		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(getPasswordEncoder());
+		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(getBcryptPasswordEncoder());
     }
+
 	
 	@Bean
-	PasswordEncoder getPasswordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
+	PasswordEncoder getBcryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 		    .authorizeRequests()
-		    .antMatchers("/hello","/customLogin")
+		    .antMatchers("/hello","/customLogin" , "/signup")
 		    .permitAll()
 		    .antMatchers("/helloWorld","/bye")
 		    .authenticated()
