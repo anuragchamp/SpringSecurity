@@ -1,8 +1,11 @@
 package com.test.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -24,6 +27,17 @@ public class MyAppConfig  {
 	      viewResolver.setPrefix("/WEB-INF/views/");
 	      viewResolver.setSuffix(".jsp");
 	      return viewResolver;
+	}
+	
+	@Bean
+	DataSource getDataSource() {
+		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+	
+		driverManagerDataSource.setUrl("com.mysql.cj.jdbc.Driver");
+		  driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/mypractice");
+		  driverManagerDataSource.setUsername("root");
+		  driverManagerDataSource.setPassword("qwerty10");
+	   return driverManagerDataSource;
 	}
 
 }
