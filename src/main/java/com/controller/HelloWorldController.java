@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.security.dto.SignupDto;
+import com.users.dao.UserRepo;
 
 @Controller
 public class HelloWorldController {
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	UserRepo userRepo;
 
 	@GetMapping("/helloWorld")
 	public String helloWorld() {
@@ -39,6 +43,8 @@ public class HelloWorldController {
 		signupDto.setPassword(passwordEncoder.encode(signupDto.getPassword()));
 		
 		System.out.println(passwordEncoder.encode(signupDto.getPassword()));
+		
+		userRepo.save(signupDto);
 		
 		return "redirect:/customLogin";
 	}
