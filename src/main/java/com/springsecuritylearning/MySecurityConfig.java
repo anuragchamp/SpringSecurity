@@ -24,7 +24,11 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter  {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 	   //load data from database
 		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(getBcryptPasswordEncoder());
-    }
+      //auth.inMemoryAuthentication().passwordEncode
+	
+		
+		
+	}
 
 	
 	@Bean

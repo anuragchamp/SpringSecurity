@@ -26,7 +26,7 @@ public class HelloWorldController {
 	@Autowired
 	UserRepo userRepo;
 	
-	@GetMapping("/")
+	@GetMapping("/home")
 	public String homepage(Principal principal , Authentication auth , Model model) {
 		
 		 String username = principal.getName();
@@ -36,11 +36,6 @@ public class HelloWorldController {
 		 model.addAttribute("username", username);
 		 model.addAttribute("roles", roles);
 		
-		return "home";
-	}
-
-	@GetMapping("/home")
-	public String helloWorld() {
 		return "home";
 	}
 	
