@@ -39,6 +39,11 @@ public class HelloWorldController {
 		return "home";
 	}
 	
+	@GetMapping("/")
+	public String loginPage() {
+		return "login";
+	}
+	
 	@GetMapping("/customLogin")
 	public String login() {
 		return "login";

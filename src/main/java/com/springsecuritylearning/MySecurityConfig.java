@@ -13,20 +13,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.services.UserDetailsImpl;
+
 @EnableWebSecurity(debug = true)
 public class MySecurityConfig extends WebSecurityConfigurerAdapter  {
 	
 	@Autowired
 	private DataSource dataSource;
 	
+	@Autowired
+	UserDetailsImpl user;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 	   //load data from database
-		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(getBcryptPasswordEncoder());
+		//auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(getBcryptPasswordEncoder());
       //auth.inMemoryAuthentication().passwordEncode
 	
-		
+		auth.userDetailsService(user).passwordEncoder(NoOpPasswordEncoder.getInstance());
 		
 	}
 
@@ -42,14 +46,12 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter  {
 		    .authorizeRequests()
 		    .antMatchers("/coder").hasAuthority("user")
 		    .antMatchers("/admin").hasAuthority("admin")
-		    .antMatchers("/hello","/customLogin" , "/signup")
-		    .permitAll()
+		    .antMatchers("/hello","/customLogin" , "/signup").permitAll()
 		    .antMatchers("/home","/bye")
 		    .authenticated()
 		    .and()
 		    .formLogin().loginPage("/customLogin")
-		    .and()
-		    .httpBasic()
+		    .defaultSuccessUrl("/home")
 		    .and()
 		    .logout();
 	}
